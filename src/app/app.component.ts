@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 
 export class Player {
   entry: number;
@@ -19,7 +19,16 @@ export class AppComponent {
     name: 'Player',
     commands: [],
   };
+  private keyEvents = new Subject();
+  constructor() {
+    this.keyEvents
+      .subscribe((keyCode) => {
+        console.log("test!", keyCode);
+      });
+  }
   @HostListener('keydown') handleKey($event) {
+    const keyCode = $event.keyCode;
+    this.keyEvents.next(keyCode);
     console.log($event)
   };
 }
