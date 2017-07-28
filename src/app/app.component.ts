@@ -22,8 +22,8 @@ export class AppComponent {
   private keyEvents = new Subject();
   constructor() {
     this.keyEvents
-      .subscribe((keyCode) => {
-        console.log("test!", keyCode);
+      .subscribe((keyCode: number) => {
+        this.player.commands.push(keyCode);
       });
   }
   @HostListener('keydown') handleKey($event) {
