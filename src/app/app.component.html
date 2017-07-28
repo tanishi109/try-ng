@@ -1,4 +1,4 @@
-<div>
+<div (window:keydown)="handleKey($event)">
   <h1>{{player.name}} {{player.entry}}</h1>
   <label for="name">Edit name</label>
   <input [(ngModel)]="player.name" placeholder="name"> 
