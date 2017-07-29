@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
+import { AppService } from './app.service';
 
 export class Player {
   entry: number;
@@ -11,6 +12,7 @@ export class Player {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [AppService],
 })
 export class AppComponent {
   title = 'My First Angular App';
@@ -21,7 +23,7 @@ export class AppComponent {
   };
   private keyEvents = new Subject();
   private commandEvents = new Subject();
-  constructor() {
+  constructor(private appService: AppService) {
     this.keyEvents
       .filter((keyCode: number) => {
         return [37, 38, 39, 40].includes(keyCode);
@@ -31,10 +33,10 @@ export class AppComponent {
         if (keyCodes.includes(39) && keyCodes.includes(40)) {
           return 'rightBottom';
         }
-        return keyCodes;
+        return appService.getCommandFromKeyCode(keyCodes[0]);
       })
-      .subscribe((keyCodes: number[]) => {
-        this.commandEvents.next(keyCodes[0]);
+      .subscribe((command: string) => {
+        this.commandEvents.next(command);
       });
     this.commandEvents
       .subscribe((keyCode) => {
