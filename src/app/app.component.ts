@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 export class Player {
   entry: number;
   name: string;
-  commands: number[];
+  commands: string[];
 }
 
 @Component({
@@ -31,7 +31,7 @@ export class AppComponent {
       .buffer(Observable.interval(16))
       .map((keyCodes: number[]) => {
         if (keyCodes.includes(39) && keyCodes.includes(40)) {
-          return 'rightBottom';
+          return 'rightDown';
         }
         return appService.getCommandFromKeyCode(keyCodes[0]);
       })
@@ -39,8 +39,12 @@ export class AppComponent {
         this.commandEvents.next(command);
       });
     this.commandEvents
-      .subscribe((keyCode) => {
-        console.log(keyCode)
+      .buffer(Observable.interval(1000))
+      .subscribe((commands: string[]) => {
+        if (commands.includes('right') && commands.includes('down') && commands.includes('rightDown')) {
+          console.log("!!")
+        }
+        this.player.commands = commands;
       })
   }
   @HostListener('keydown') handleKey($event) {
