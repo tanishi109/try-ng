@@ -22,13 +22,19 @@ export class AppComponent {
   private keyEvents = new Subject();
   constructor() {
     this.keyEvents
-      .subscribe((keyCode: number) => {
-        this.player.commands.push(keyCode);
+      .filter((keyCode: number) => {
+        return [37, 38, 39, 40].includes(keyCode);
+      })
+      .buffer(Observable.interval(100))
+      .filter((keyCodes: number[]) => {
+        return keyCodes.includes(39) && keyCodes.includes(40);
+      })
+      .subscribe((keyCode) => {
+        console.log("↘︎")
       });
   }
   @HostListener('keydown') handleKey($event) {
     const keyCode = $event.keyCode;
     this.keyEvents.next(keyCode);
-    console.log($event)
   };
 }
