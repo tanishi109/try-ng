@@ -31,7 +31,7 @@ export class AppComponent {
       .buffer(Observable.interval(16))
       .map((keyCodes: number[]) => {
         if (keyCodes.includes(39) && keyCodes.includes(40)) {
-          return 'rightDown';
+          return '9';
         }
         return appService.getCommandFromKeyCode(keyCodes[0]);
       })
@@ -41,8 +41,8 @@ export class AppComponent {
     this.commandEvents
       .buffer(Observable.interval(1000))
       .subscribe((commands: string[]) => {
-        if (commands.includes('right') && commands.includes('down') && commands.includes('rightDown')) {
-          console.log("!!")
+        if (commands.includes('6') && commands.includes('8') && commands.includes('9')) {
+          console.log('!!');
         }
         this.player.commands = commands;
       })
