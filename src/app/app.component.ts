@@ -20,18 +20,26 @@ export class AppComponent {
     commands: [],
   };
   private keyEvents = new Subject();
+  private commandEvents = new Subject();
   constructor() {
     this.keyEvents
       .filter((keyCode: number) => {
         return [37, 38, 39, 40].includes(keyCode);
       })
-      .buffer(Observable.interval(100))
-      .filter((keyCodes: number[]) => {
-        return keyCodes.includes(39) && keyCodes.includes(40);
+      .buffer(Observable.interval(16))
+      .map((keyCodes: number[]) => {
+        if (keyCodes.includes(39) && keyCodes.includes(40)) {
+          return 'rightBottom';
+        }
+        return keyCodes;
       })
-      .subscribe((keyCode) => {
-        console.log("↘︎")
+      .subscribe((keyCodes: number[]) => {
+        this.commandEvents.next(keyCodes[0]);
       });
+    this.commandEvents
+      .subscribe((keyCode) => {
+        console.log(keyCode)
+      })
   }
   @HostListener('keydown') handleKey($event) {
     const keyCode = $event.keyCode;
