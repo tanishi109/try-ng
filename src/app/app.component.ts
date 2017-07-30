@@ -42,7 +42,16 @@ export class AppComponent {
         this.commandEvents.next(command);
       });
     this.commandEvents
-      .buffer(Observable.interval(1000))
+      .scan((acc: string[], value: string) => {
+        const commands = acc.concat(value);
+
+        if (commands.length < 3) {
+          return commands;
+        }
+        return commands.slice(commands.length - 3, commands.length);
+      }, [])
+      .timeout(1000)
+      .retry()
       .subscribe((commands: string[]) => {
         if (commands.includes('6') && commands.includes('8') && commands.includes('9')) {
           console.log('!!');
