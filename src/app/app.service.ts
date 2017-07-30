@@ -20,6 +20,10 @@ export class AppService {
     '-0.4286': '6',
     '0.1429': '8',
     '-0.1429': '9',
+    '0.0000': 'p',
+    '1.0000': 'p',
+    '2.0000': 'p',
+    '3.0000': 'p',
   };
   getCommandFromKeyCode(code: number): string {
     return this.keyMap[code];

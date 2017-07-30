@@ -49,15 +49,15 @@ export class AppComponent {
       .scan((acc: string[], value: string) => {
         const commands = acc.concat(value);
 
-        if (commands.length < 3) {
+        if (commands.length < 4) {
           return commands;
         }
-        return commands.slice(commands.length - 3, commands.length);
+        return commands.slice(commands.length - 4, commands.length);
       }, [])
       .timeout(1000)
       .retry()
       .subscribe((commands: string[]) => {
-        if (commands[0] === '6' && commands[1] === '8' && commands[2] === '9') {
+        if (commands[0] === '6' && commands[1] === '8' && commands[2] === '9' && commands[3] === 'p') {
           console.log('!!');
         }
         this.player.commands = commands;
@@ -76,6 +76,17 @@ export class AppComponent {
     new GamePadManager((gamepad: Gamepad) => { // tslint:disable-line
       const crossKeyCode = gamepad.axes[gamepad.axes.length - 1];
       const command = appService.getCommandFromProConKeyCode(crossKeyCode);
+      const pad = gamepad.buttons.map((button, index) => {
+        if (button.pressed) {
+          return appService.getCommandFromProConKeyCode(parseFloat(`${index}`));
+        }
+      });
+
+      pad
+        .filter((c) => !!c)
+        .forEach((c) => {
+          this.gamePadEvents.next(c);
+        });
 
       this.gamePadEvents.next(command);
     });
