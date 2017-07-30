@@ -37,6 +37,7 @@ export class AppComponent {
         }
         return appService.getCommandFromKeyCode(keyCodes[0]);
       })
+      .filter((command: string) => !!command)
       .subscribe((command: string) => {
         this.commandEvents.next(command);
       });
