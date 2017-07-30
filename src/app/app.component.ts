@@ -53,7 +53,7 @@ export class AppComponent {
       .timeout(1000)
       .retry()
       .subscribe((commands: string[]) => {
-        if (commands.includes('6') && commands.includes('8') && commands.includes('9')) {
+        if (commands[0] === '6' && commands[1] === '8' && commands[2] === '9') {
           console.log('!!');
         }
         this.player.commands = commands;
