@@ -2,6 +2,8 @@ import { Component, HostListener } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AppService } from './app.service';
 
+import GamePadManager from './GamePadManager';
+
 export class Player {
   entry: number;
   name: string;
@@ -23,6 +25,7 @@ export class AppComponent {
   };
   private keyEvents = new Subject();
   private commandEvents = new Subject();
+  private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
     this.keyEvents
       .filter((keyCode: number) => {
@@ -41,6 +44,7 @@ export class AppComponent {
       .subscribe((command: string) => {
         this.commandEvents.next(command);
       });
+
     this.commandEvents
       .scan((acc: string[], value: string) => {
         const commands = acc.concat(value);
@@ -58,6 +62,23 @@ export class AppComponent {
         }
         this.player.commands = commands;
       })
+
+    let n = '0';
+    this.gamePadEvents
+      .subscribe((command: string) => {
+        if (command !== n && command !== '5') {
+          this.commandEvents.next(command);
+        }
+
+        n = command;
+      })
+
+    new GamePadManager((gamepad: Gamepad) => { // tslint:disable-line
+      const crossKeyCode = gamepad.axes[gamepad.axes.length - 1];
+      const command = appService.getCommandFromProConKeyCode(crossKeyCode);
+
+      this.gamePadEvents.next(command);
+    });
   }
   @HostListener('keydown') handleKey($event) {
     const keyCode = $event.keyCode;
