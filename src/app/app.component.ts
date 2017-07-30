@@ -28,7 +28,9 @@ export class AppComponent {
       .filter((keyCode: number) => {
         return [37, 38, 39, 40].includes(keyCode);
       })
-      .buffer(Observable.interval(16))
+      .timeout(100)
+      .retry()
+      .buffer(Observable.interval(100))
       .map((keyCodes: number[]) => {
         if (keyCodes.includes(39) && keyCodes.includes(40)) {
           return '9';
