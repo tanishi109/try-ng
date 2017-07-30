@@ -63,14 +63,14 @@ export class AppComponent {
         this.player.commands = commands;
       })
 
-    let n = '0';
+    let prevValue = '0';
     this.gamePadEvents
       .subscribe((command: string) => {
-        if (command !== n && command !== '5') {
+        if (command !== prevValue && command !== '5') {
           this.commandEvents.next(command);
         }
 
-        n = command;
+        prevValue = command;
       })
 
     new GamePadManager((gamepad: Gamepad) => { // tslint:disable-line
