@@ -1,29 +1,61 @@
 import { Injectable } from '@angular/core';
 
+enum Commands {
+  LeftUp = '1',
+  Up = '2',
+  RightUp = '3',
+  Left = '4',
+  Neutral = '5',
+  Right = '6',
+  LeftDown = '7',
+  Down = '8',
+  RightDown = '9',
+  P = 'p', // TODO: A B X Y
+}
+
+type keyboards = '37' | '38' | '39' | '40';
+
+type keyMap = {
+  [key in keyboards]: Commands
+}
+
+type proConAxes = '0.7143' | '-1.0000' | '1.2857' | '-0.4286' | '0.1429' | '-0.1429';
+type proConButtons = '0.0000' | '1.0000' | '2.0000' | '3.0000';
+type proConKeys = proConAxes | proConButtons;
+
+type proConMap = {
+  [key in proConKeys]: Commands
+}
+
+interface IAppService {
+  keyMap: keyMap;
+  proConMap: proConMap;
+}
+
 @Injectable()
-export class AppService {
+export class AppService implements IAppService {
   /*
   1 2 3  ↖︎ ↑ ↗︎
   4 5 6  ←   →
   7 8 9  ↙ ︎↓ ↘︎
   */
   keyMap = {
-    37: '4',
-    38: '2',
-    39: '6',
-    40: '8',
+    '37': Commands.Left,
+    '38': Commands.Up,
+    '39': Commands.Right,
+    '40': Commands.Down,
   };
   proConMap = {
-    '0.7143': '4',
-    '-1.0000': '2',
-    '1.2857': '5',
-    '-0.4286': '6',
-    '0.1429': '8',
-    '-0.1429': '9',
-    '0.0000': 'p',
-    '1.0000': 'p',
-    '2.0000': 'p',
-    '3.0000': 'p',
+    '0.7143': Commands.Left,
+    '-1.0000': Commands.Up,
+    '1.2857': Commands.Neutral,
+    '-0.4286': Commands.Right,
+    '0.1429': Commands.Down,
+    '-0.1429': Commands.RightDown,
+    '0.0000': Commands.P,
+    '1.0000': Commands.P,
+    '2.0000': Commands.P,
+    '3.0000': Commands.P,
   };
   getCommandFromKeyCode(code: number): string {
     return this.keyMap[code];
