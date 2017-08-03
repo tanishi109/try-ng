@@ -13,7 +13,7 @@ enum Commands {
   P = 'p', // TODO: A B X Y
 }
 
-type keyboards = '37' | '38' | '39' | '40';
+type keyboards = '37' | '38' | '39' | '40' | '90';
 
 type keyMap = {
   [key in keyboards]: Commands
@@ -44,6 +44,7 @@ export class AppService implements IAppService {
     '38': Commands.Up,
     '39': Commands.Right,
     '40': Commands.Down,
+    '90': Commands.P,
   };
   proConMap = {
     '0.7143': Commands.Left,

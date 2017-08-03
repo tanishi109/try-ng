@@ -29,7 +29,7 @@ export class AppComponent {
   constructor(private appService: AppService) {
     this.keyEvents
       .filter((keyCode: number) => {
-        return [37, 38, 39, 40].includes(keyCode);
+        return [37, 38, 39, 40, 90].includes(keyCode);
       })
       .timeout(100)
       .retry()
@@ -58,7 +58,7 @@ export class AppComponent {
       .retry()
       .subscribe((commands: string[]) => {
         if (commands[0] === '6' && commands[1] === '8' && commands[2] === '9' && commands[3] === 'p') {
-          console.log('!!');
+          console.log('✊');
         }
         this.player.commands = commands;
       })
