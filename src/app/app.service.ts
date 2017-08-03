@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 
-enum Commands {
-  LeftUp = '1',
-  Up = '2',
-  RightUp = '3',
+export enum Commands {
+  LeftDown = '1',
+  Down = '2',
+  RightDown = '3',
   Left = '4',
   Neutral = '5',
   Right = '6',
-  LeftDown = '7',
-  Down = '8',
-  RightDown = '9',
+  LeftUp = '7',
+  Up = '8',
+  RightUp = '9',
   P = 'p', // TODO: A B X Y
 }
 
@@ -35,9 +35,9 @@ interface IAppService {
 @Injectable()
 export class AppService implements IAppService {
   /*
-  1 2 3  ↖︎ ↑ ↗︎
+  7 8 9  ↖︎ ↑ ↗︎
   4 5 6  ←   →
-  7 8 9  ↙ ︎↓ ↘︎
+  1 2 3  ↙ ︎↓ ↘︎
   */
   keyMap = {
     '37': Commands.Left,

@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AppService } from './app.service';
+import { AppService, Commands } from './app.service';
 
 import GamePadManager from './GamePadManager';
 
@@ -36,7 +36,7 @@ export class AppComponent {
       .buffer(Observable.interval(100))
       .map((keyCodes: number[]) => {
         if (keyCodes.includes(39) && keyCodes.includes(40)) {
-          return '9';
+          return Commands.RightDown;
         }
         return appService.getCommandFromKeyCode(keyCodes[0]);
       })
@@ -57,8 +57,11 @@ export class AppComponent {
       .timeout(1000)
       .retry()
       .subscribe((commands: string[]) => {
-        if (commands[0] === '6' && commands[1] === '8' && commands[2] === '9' && commands[3] === 'p') {
-          console.log('✊');
+        if (commands[0] === Commands.Right && commands[1] === Commands.Down && commands[2] === Commands.RightDown && commands[3] === Commands.P) {
+          console.log('٩( ᐛ )و');
+        }
+        if (commands[0] === Commands.Right && commands[1] === Commands.RightDown && commands[2] === Commands.Down && commands[3] === Commands.P) {
+          console.log('_(┐「ε:)_');
         }
         this.player.commands = commands;
       })
@@ -66,7 +69,7 @@ export class AppComponent {
     let prevValue = '0';
     this.gamePadEvents
       .subscribe((command: string) => {
-        if (command !== prevValue && command !== '5') {
+        if (command !== prevValue && command !== Commands.Neutral) {
           this.commandEvents.next(command);
         }
 
