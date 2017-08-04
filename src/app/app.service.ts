@@ -66,4 +66,42 @@ export class AppService implements IAppService {
 
     return this.proConMap[codeString];
   }
+  rollCommandDice(): string[] {
+    const command = this.rollCrossCommandDice();
+    const direction = this.rollDice(0, 1) === 0 ? -1 : 1;
+    const step = this.rollDice(1, 2) * direction;
+    const secondCommand = /* TODO: implement this by using CommandDial */'a';
+
+    return [command, secondCommand];
+  }
+  rollCrossCommandDice() :string {
+    const crossCommands = [Commands.Down, Commands.Right, Commands.Left, Commands.Up];
+    const index = this.rollDice(0, crossCommands.length - 1);
+
+    return crossCommands[index];
+  }
+  rollDice(min, max): number {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
+}
+
+interface ICommandDial {
+  command: string;
+  index: number;
+}
+
+class CommandDial {
+  command = null;
+  index = null;
+  dial = [Commands.Up, Commands.RightUp, Commands.Right, Commands.RightDown, Commands.Down, Commands.LeftDown, Commands.Left, Commands.LeftUp];
+  constructor(command: Commands) {
+    this.command = command;
+    this.index = this.dial.indexOf(command);
+  }
+  /**
+   * @param clockwise 1: clockwise, -1: anticlockwise
+   */
+  rotate(clockwise: 1 | -1) {
+    // TODO: implement here!
+  }
 }
