@@ -8,6 +8,7 @@ export class Player {
   entry: number;
   name: string;
   commands: string[];
+  move: Commands[];
 }
 
 @Component({
@@ -22,16 +23,16 @@ export class AppComponent {
     entry: 1,
     name: 'Player',
     commands: [],
+    move: [],
   };
   private keyEvents = new Subject();
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
+    this.player.move = this.appService.rollMoveDice();
+
     this.keyEvents
       .filter((keyCode: number) => {
-        if (keyCode === 88) {
-          console.log(this.appService.rollMoveDice());
-        }
         return [37, 38, 39, 40, 90].includes(keyCode);
       })
       .timeout(100)
