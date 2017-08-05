@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AppService, Commands } from './app.service';
+import { isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
 
@@ -70,29 +71,9 @@ export class AppComponent {
       .timeout(1000)
       .retry()
       .subscribe((commands: string[]) => {
-        if (
-          commands[0] === Commands.Right &&
-          commands[1] === Commands.Down &&
-          commands[2] === Commands.RightDown &&
-          commands[3] === Commands.P
-        ) {
-          console.log('٩( ᐛ )و');
-        }
-        if (
-          commands[0] === Commands.Right &&
-          commands[1] === Commands.RightDown &&
-          commands[2] === Commands.Down &&
-          commands[3] === Commands.P
-        ) {
-          console.log('_(┐「ε:)_');
-        }
-        if (
-          commands[0] === Commands.Down &&
-          commands[1] === Commands.RightDown &&
-          commands[2] === Commands.Right &&
-          commands[3] === Commands.P
-        ) {
-          console.log('三(卍^o^)卍');
+        if (isEqual(this.player.move, commands)) {
+          console.log('OK!');
+          this.player.move = appService.rollMoveDice();
         }
         this.player.commands = commands;
       })
