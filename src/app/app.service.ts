@@ -80,7 +80,7 @@ export class AppService implements IAppService {
       return dial.rotate(clockwise, 1).command;
     })();
 
-    return [first, second, third];
+    return [first, second, third, Commands.P];
   }
   rollCrossCommandDice(): Commands {
     const crossCommands = [Commands.Down, Commands.Right, Commands.Left, Commands.Up];
