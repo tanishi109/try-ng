@@ -74,10 +74,10 @@ export class AppService implements IAppService {
     const second = dial.rotate(clockwise, step).command;
     const third = (() => {
       if (step === 2) {
-        return dial.rotate(!clockwise, step).command;
+        return dial.rotate(!clockwise, 1).command;
       }
 
-      return dial.rotate(clockwise, step).command;
+      return dial.rotate(clockwise, 1).command;
     })();
 
     return [first, second, third];
