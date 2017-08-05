@@ -24,8 +24,6 @@ describe('CommandDial', () => {
     });
 
     it('should return command clockwise', () => {
-      expect(c.command).toBe(Commands.Down);
-
       c.rotate(true, 1);
       expect(c.command).toBe(Commands.LeftDown);
 
@@ -55,7 +53,6 @@ describe('CommandDial', () => {
     });
 
     it('should return twice next command when step specified', () => {
-      expect(c.command).toBe(Commands.Down);
 
       c.rotate(true, 2);
       expect(c.command).toBe(Commands.Left);
