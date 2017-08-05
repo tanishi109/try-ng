@@ -98,7 +98,7 @@ interface ICommandDial {
   index: number;
 }
 
-class CommandDial {
+export class CommandDial {
   command = null;
   index = null;
   dial = [
@@ -115,7 +115,8 @@ class CommandDial {
       new Error("minus overflow will occured. please fix rotate() method..."); // tslint:disable-line
     }
 
-    const delta = clockwise ? 1 : -1;
+    const direction = clockwise ? 1 : -1;
+    const delta = direction * step;
     const nextIndex = (this.index + this.dial.length + delta) % this.dial.length;
     const nextCommand = this.dial[nextIndex];
 
