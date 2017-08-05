@@ -39,8 +39,17 @@ export class AppComponent {
       .retry()
       .buffer(Observable.interval(100))
       .map((keyCodes: number[]) => {
+        if (keyCodes.includes(37) && keyCodes.includes(40)) {
+          return Commands.LeftDown;
+        }
         if (keyCodes.includes(39) && keyCodes.includes(40)) {
           return Commands.RightDown;
+        }
+        if (keyCodes.includes(37) && keyCodes.includes(38)) {
+          return Commands.LeftUp;
+        }
+        if (keyCodes.includes(39) && keyCodes.includes(38)) {
+          return Commands.RightUp;
         }
         return appService.getCommandFromKeyCode(keyCodes[0]);
       })
