@@ -29,6 +29,9 @@ export class AppComponent {
   constructor(private appService: AppService) {
     this.keyEvents
       .filter((keyCode: number) => {
+        if (keyCode === 88) {
+          console.log(this.appService.rollMoveDice());
+        }
         return [37, 38, 39, 40, 90].includes(keyCode);
       })
       .timeout(100)
