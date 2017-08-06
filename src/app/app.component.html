@@ -9,5 +9,5 @@
     type this!:
     {{getMoveView()}}
   </div>
-  <app-command-component [command]="player.move[0]"></app-command-component> 
+  <app-command-component *ngFor="let m of player.move" [command]="m"></app-command-component> 
 </div>
