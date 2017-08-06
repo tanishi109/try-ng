@@ -1,13 +1,5 @@
 <div (window:keydown)="handleKey($event)">
-  <h1>{{player.name}} {{player.entry}}</h1>
-  <label for="name">Edit name</label>
-  <input [(ngModel)]="player.name" placeholder="name"> 
-  <div *ngFor="let c of player.commands">
-    {{c}}
+  <div class="move">
+    <app-command-component *ngFor="let m of player.move" [command]="m"></app-command-component> 
   </div>
-  <div>
-    type this!:
-    {{getMoveView()}}
-  </div>
-  <app-command-component *ngFor="let m of player.move" [command]="m"></app-command-component> 
 </div>
