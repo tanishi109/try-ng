@@ -10,6 +10,7 @@ export class Player {
   name: string;
   commands: string[];
   move: Commands[];
+  count: number;
 }
 
 @Component({
@@ -25,6 +26,7 @@ export class AppComponent {
     name: 'Player',
     commands: [],
     move: [],
+    count: 0,
   };
   private keyEvents = new Subject();
   private commandEvents = new Subject();
@@ -68,12 +70,12 @@ export class AppComponent {
         }
         return commands.slice(commands.length - 4, commands.length);
       }, [])
-      .timeout(1000)
+      .timeout(1000) // TODO: 20f
       .retry()
       .subscribe((commands: string[]) => {
         if (isEqual(this.player.move, commands)) {
-          console.log('OK!');
           this.player.move = appService.rollMoveDice();
+          this.player.count += 1;
         }
         this.player.commands = commands;
       })

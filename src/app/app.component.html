@@ -2,4 +2,7 @@
   <div class="move">
     <app-command-component *ngFor="let m of player.move" [command]="m"></app-command-component> 
   </div>
+  <div>
+    Point: {{player.count}}
+  </div>
 </div>
