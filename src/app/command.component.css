@@ -1,0 +1,22 @@
+  .wrapper {
+  --border-color: black;
+
+  width: 94px;
+  height: 94px;
+  }
+
+  .row {
+    display: flex;
+  }
+  .row:not(:first-child) {
+    margin-top: 2px;
+  }
+
+  .inner {
+    width: 30px;
+    height: 30px;
+    background-color: tomato;
+  }
+  .inner:not(:first-child) {
+    margin-left: 2px;
+  }
