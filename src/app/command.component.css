@@ -16,7 +16,12 @@
   width: 30px;
   height: 30px;
   background-color: tomato;
+  opacity: 0.3;
 }
 .inner:not(:first-child) {
   margin-left: 2px;
+}
+.inner.active {
+  background-color: tomato;
+  opacity: 1;
 }
