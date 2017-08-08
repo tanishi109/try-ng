@@ -1,16 +1,27 @@
 import { Component, HostListener } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AppService, Commands } from './app.service';
-import { isEqual } from 'lodash';
+import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
+
+interface PlayerMove {
+  move: Commands[];
+  finished: boolean;
+}
 
 export class Player {
   entry: number;
   name: string;
   commands: string[];
-  move: Commands[];
+  move: PlayerMove[];
   count: number;
+
+  getCurrentMove?() {
+    const currentMoveIndex = 1;
+    
+    return this.move[currentMoveIndex];
+  }
 }
 
 @Component({
@@ -21,7 +32,7 @@ export class Player {
 })
 export class AppComponent {
   title = 'My First Angular App';
-  player: Player = {
+  player: Player = { // TODO: new Player() にする？
     entry: 1,
     name: 'Player',
     commands: [],
@@ -32,7 +43,12 @@ export class AppComponent {
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
-    this.player.move = this.appService.rollMoveDice();
+    times(currentMoveIndex + 1).forEach(() => {
+      this.player.move.push({
+        move: this.appService.rollMoveDice(),
+        finished: false,
+      });
+    });
 
     this.keyEvents
       .filter((keyCode: number) => {
