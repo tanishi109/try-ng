@@ -16,11 +16,16 @@ export class Player {
   commands: string[];
   move: PlayerMove[];
   score: number;
+  currentMoveIndex = 1;
 
-  getCurrentMove?() {
-    const currentMoveIndex = 1;
-    
-    return this.move[currentMoveIndex];
+  constructor(params) {
+    Object.keys(params).forEach((key) => {
+      this[key] = params[key];
+    });
+  }
+
+  getCurrentMove() {
+    return this.move[this.currentMoveIndex];
   }
 }
 
@@ -32,18 +37,18 @@ export class Player {
 })
 export class AppComponent {
   title = 'My First Angular App';
-  player: Player = { // TODO: new Player() にする？
+  player: Player = new Player({
     entry: 1,
     name: 'Player',
     commands: [],
     move: [],
-  };
     score: 0,
+  });
   private keyEvents = new Subject();
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
-    times(currentMoveIndex + 1).forEach(() => {
+    times(this.player.currentMoveIndex + 1).forEach(() => {
       this.player.move.push({
         move: this.appService.rollMoveDice(),
         finished: false,
@@ -89,8 +94,15 @@ export class AppComponent {
       .timeout(1000) // TODO: 20f
       .retry()
       .subscribe((commands: string[]) => {
-        if (isEqual(this.player.move, commands)) {
-          this.player.move = appService.rollMoveDice();
+        if (isEqual(this.player.getCurrentMove(), commands)) {
+          // add new move
+          this.player.move = [
+            {
+              move: appService.rollMoveDice(),
+              finished: false,
+            },
+            ...this.player.move,
+          ];
           this.player.score += 1;
         }
         this.player.commands = commands;
