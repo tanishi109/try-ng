@@ -1,12 +1,12 @@
 <div (window:keydown)="handleKey($event)">
   <div class="move">
-    <app-command-component *ngFor="let m of player.nextMove" [command]="m"></app-command-component> 
+    <app-command-component *ngFor="let m of player.move[0]" [command]="m"></app-command-component> 
   </div>
   <div class="move">
-    <app-command-component *ngFor="let m of player.move" [command]="m"></app-command-component> 
+    <app-command-component *ngFor="let m of player.move[player.currentMoveIndex]" [command]="m"></app-command-component> 
   </div>
   <div class="move">
-    <app-command-component *ngFor="let m of player.finishedMove" [command]="m"></app-command-component> 
+    <app-command-component *ngFor="let m of player.move[2]" [command]="m"></app-command-component> 
   </div>
   <div>
     Point: {{player.score}}
