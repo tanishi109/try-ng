@@ -5,7 +5,7 @@ import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
 
-interface PlayerMove {
+interface Task {
   move: Commands[];
   finished: boolean;
 }
@@ -14,7 +14,7 @@ export class Player {
   entry: number;
   name: string;
   commands: string[];
-  move: PlayerMove[];
+  taskQueue: Task[];
   score: number;
   currentMoveIndex = 1;
 
@@ -25,7 +25,7 @@ export class Player {
   }
 
   getCurrentMove() {
-    return this.move[this.currentMoveIndex];
+    return this.taskQueue[this.currentMoveIndex].move;
   }
 }
 
@@ -41,7 +41,7 @@ export class AppComponent {
     entry: 1,
     name: 'Player',
     commands: [],
-    move: [],
+    taskQueue: [],
     score: 0,
   });
   private keyEvents = new Subject();
@@ -49,7 +49,7 @@ export class AppComponent {
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
     times(this.player.currentMoveIndex + 1).forEach(() => {
-      this.player.move.push({
+      this.player.taskQueue.push({
         move: this.appService.rollMoveDice(),
         finished: false,
       });
@@ -96,12 +96,12 @@ export class AppComponent {
       .subscribe((commands: string[]) => {
         if (isEqual(this.player.getCurrentMove(), commands)) {
           // add new move
-          this.player.move = [
+          this.player.taskQueue = [
             {
               move: appService.rollMoveDice(),
               finished: false,
             },
-            ...this.player.move,
+            ...this.player.taskQueue,
           ];
           this.player.score += 1;
         }
