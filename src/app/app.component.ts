@@ -5,6 +5,14 @@ import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
 
+interface IMove {
+  commands: Commands[];
+}
+
+export class Move implements IMove {
+  commands = [];
+}
+
 interface ITask {
   move: Commands[];
   finished: boolean;
@@ -37,10 +45,6 @@ export class Player {
   getCurrentMove() {
     return this.taskQueue[this.currentMoveIndex].move;
   }
-}
-
-export class Move {
-  
 }
 
 @Component({
