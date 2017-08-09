@@ -1,16 +1,32 @@
 import { Component, HostListener } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AppService, Commands } from './app.service';
-import { isEqual } from 'lodash';
+import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
+
+interface Task {
+  move: Commands[];
+  finished: boolean;
+}
 
 export class Player {
   entry: number;
   name: string;
   commands: string[];
-  move: Commands[];
-  count: number;
+  taskQueue: Task[];
+  score: number;
+  currentMoveIndex = 1;
+
+  constructor(params) {
+    Object.keys(params).forEach((key) => {
+      this[key] = params[key];
+    });
+  }
+
+  getCurrentMove() {
+    return this.taskQueue[this.currentMoveIndex].move;
+  }
 }
 
 @Component({
@@ -21,18 +37,23 @@ export class Player {
 })
 export class AppComponent {
   title = 'My First Angular App';
-  player: Player = {
+  player: Player = new Player({
     entry: 1,
     name: 'Player',
     commands: [],
-    move: [],
-    count: 0,
-  };
+    taskQueue: [],
+    score: 0,
+  });
   private keyEvents = new Subject();
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
-    this.player.move = this.appService.rollMoveDice();
+    times(this.player.currentMoveIndex + 1).forEach(() => {
+      this.player.taskQueue.push({
+        move: this.appService.rollMoveDice(),
+        finished: false,
+      });
+    });
 
     this.keyEvents
       .filter((keyCode: number) => {
@@ -73,9 +94,16 @@ export class AppComponent {
       .timeout(1000) // TODO: 20f
       .retry()
       .subscribe((commands: string[]) => {
-        if (isEqual(this.player.move, commands)) {
-          this.player.move = appService.rollMoveDice();
-          this.player.count += 1;
+        if (isEqual(this.player.getCurrentMove(), commands)) {
+          // add new move
+          this.player.taskQueue = [
+            {
+              move: appService.rollMoveDice(),
+              finished: false,
+            },
+            ...this.player.taskQueue,
+          ];
+          this.player.score += 1;
         }
         this.player.commands = commands;
       })
@@ -112,12 +140,6 @@ export class AppComponent {
     const keyCode = $event.keyCode;
     this.keyEvents.next(keyCode);
   };
-
-  getMoveView() {
-    return this.player.move.map((command) => {
-      return commandName[command];
-    });
-  }
 }
 
 const commandName = {

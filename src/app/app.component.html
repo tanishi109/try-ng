@@ -1,8 +1,8 @@
 <div (window:keydown)="handleKey($event)">
-  <div class="move">
-    <app-command-component *ngFor="let m of player.move" [command]="m"></app-command-component> 
+  <div *ngFor="let task of player.taskQueue" class="move">
+    <app-command-component *ngFor="let m of task.move" [command]="m"></app-command-component> 
   </div>
   <div>
-    Point: {{player.count}}
+    Point: {{player.score}}
   </div>
 </div>
