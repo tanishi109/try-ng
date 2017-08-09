@@ -15,7 +15,7 @@ export class Player {
   name: string;
   commands: string[];
   move: PlayerMove[];
-  count: number;
+  score: number;
 
   getCurrentMove?() {
     const currentMoveIndex = 1;
@@ -37,8 +37,8 @@ export class AppComponent {
     name: 'Player',
     commands: [],
     move: [],
-    count: 0,
   };
+    score: 0,
   private keyEvents = new Subject();
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
@@ -91,7 +91,7 @@ export class AppComponent {
       .subscribe((commands: string[]) => {
         if (isEqual(this.player.move, commands)) {
           this.player.move = appService.rollMoveDice();
-          this.player.count += 1;
+          this.player.score += 1;
         }
         this.player.commands = commands;
       })
