@@ -5,9 +5,19 @@ import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
 
-interface Task {
+interface ITask {
   move: Commands[];
   finished: boolean;
+}
+
+export class Task implements ITask {
+  move = [];
+  finished = false;
+
+  constructor(move, finished = false) {
+    this.move = move;
+    this.finished = finished;
+  }
 }
 
 export class Player {
@@ -27,6 +37,10 @@ export class Player {
   getCurrentMove() {
     return this.taskQueue[this.currentMoveIndex].move;
   }
+}
+
+export class Move {
+  
 }
 
 @Component({
@@ -49,10 +63,9 @@ export class AppComponent {
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
     times(this.player.currentMoveIndex + 1).forEach(() => {
-      this.player.taskQueue.push({
-        move: this.appService.rollMoveDice(),
-        finished: false,
-      });
+      this.player.taskQueue.push(
+        new Task(this.appService.rollMoveDice())
+      );
     });
 
     this.keyEvents
@@ -141,16 +154,3 @@ export class AppComponent {
     this.keyEvents.next(keyCode);
   };
 }
-
-const commandName = {
-  '1': '↙',
-  '2': '↓',
-  '3': '︎↘︎',
-  '4': '←',
-  // '5': '',
-  '6': '→',
-  '7': '↖︎',
-  '8': '↑ ',
-  '9': '↗︎',
-  'p': 'P',
-};
