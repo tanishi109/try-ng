@@ -140,12 +140,6 @@ export class AppComponent {
     const keyCode = $event.keyCode;
     this.keyEvents.next(keyCode);
   };
-
-  getMoveView() {
-    return this.player.move.map((command) => {
-      return commandName[command];
-    });
-  }
 }
 
 const commandName = {
