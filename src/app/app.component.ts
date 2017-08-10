@@ -60,9 +60,10 @@ export class AppComponent {
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
   constructor(private appService: AppService) {
+    // これはPlayerにやらせる
     times(this.player.currentMoveIndex + 1).forEach(() => {
       this.player.taskQueue.push(
-        new Task(this.appService.rollMoveDice())
+        new Task(this.appService.rollMoveDice()) // rollはTaskの中でやってくれ
       );
     });
 
@@ -86,10 +87,13 @@ export class AppComponent {
         if (keyCodes.includes(39) && keyCodes.includes(38)) {
           return Commands.RightUp;
         }
+        // ここでgetするんじゃ無く、playerにcurrentCommandみたいなのをセットして
+        // 上のifはPlayerのドメインモデルが持てる
         return appService.getCommandFromKeyCode(keyCodes[0]);
       })
       .filter((command: string) => !!command)
       .subscribe((command: string) => {
+        // getCurrentCommandすると取得できるとか？
         this.commandEvents.next(command);
       });
 
@@ -105,7 +109,10 @@ export class AppComponent {
       .timeout(1000) // TODO: 20f
       .retry()
       .subscribe((commands: string[]) => {
+        // これもPlayerが持つ. isEq(commandsQueue)
         if (isEqual(this.player.getCurrentMove(), commands)) {
+          // ここはPlayerでやる
+          // player.doneMove()
           // add new move
           this.player.taskQueue = [
             {
@@ -129,11 +136,14 @@ export class AppComponent {
         prevValue = command;
       })
 
+    // Gamepadインフラストラクチャ
     new GamePadManager((gamepad: Gamepad) => { // tslint:disable-line
-      const crossKeyCode = gamepad.axes[gamepad.axes.length - 1];
+      const crossKeyCode = gamepad.axes[gamepad.axes.length - 1]; // getCrossKeyにする
       const command = appService.getCommandFromProConKeyCode(crossKeyCode);
       const pad = gamepad.buttons.map((button, index) => {
         if (button.pressed) {
+          // これはGamepadドメインモデルにconverter的に定義したい(腐敗防止層)
+          // appServiceは分割されるべきっぽい
           return appService.getCommandFromProConKeyCode(parseFloat(`${index}`));
         }
       });
