@@ -5,13 +5,21 @@ import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
 
+// Move
+
 interface IMove {
   commands: Commands[];
 }
 
 export class Move implements IMove {
   commands = [];
+
+  constructor(commands) {
+    this.commands = commands;
+  }
 }
+
+// Task
 
 interface ITask {
   move: Commands[];
@@ -28,12 +36,23 @@ export class Task implements ITask {
   }
 }
 
-export class Player {
+// Player
+
+interface IPlayer {
   entry: number;
   name: string;
   commands: string[];
   taskQueue: Task[];
   score: number;
+  currentMoveIndex: number;
+}
+
+export class Player implements IPlayer {
+  entry;
+  name = "";
+  commands = [];
+  taskQueue = [];
+  score = 0;
   currentMoveIndex = 1;
 
   constructor(params) {
@@ -54,13 +73,9 @@ export class Player {
   providers: [AppService],
 })
 export class AppComponent {
-  title = 'My First Angular App';
   player: Player = new Player({
     entry: 1,
     name: 'Player',
-    commands: [],
-    taskQueue: [],
-    score: 0,
   });
   private keyEvents = new Subject();
   private commandEvents = new Subject();
