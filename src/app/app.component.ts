@@ -5,20 +5,6 @@ import { times, isEqual } from 'lodash';
 
 import GamePadManager from './GamePadManager';
 
-// Move
-
-interface IMove {
-  commands: Commands[];
-}
-
-export class Move implements IMove {
-  commands = [];
-
-  constructor(commands) {
-    this.commands = commands;
-  }
-}
-
 // Task
 
 interface ITask {
@@ -39,8 +25,6 @@ export class Task implements ITask {
 // Player
 
 interface IPlayer {
-  entry: number;
-  name: string;
   commands: string[];
   taskQueue: Task[];
   score: number;
@@ -48,14 +32,12 @@ interface IPlayer {
 }
 
 export class Player implements IPlayer {
-  entry;
-  name = "";
   commands = [];
   taskQueue = [];
   score = 0;
   currentMoveIndex = 1;
 
-  constructor(params) {
+  constructor(params = {}) {
     Object.keys(params).forEach((key) => {
       this[key] = params[key];
     });
@@ -73,10 +55,7 @@ export class Player implements IPlayer {
   providers: [AppService],
 })
 export class AppComponent {
-  player: Player = new Player({
-    entry: 1,
-    name: 'Player',
-  });
+  player: Player = new Player();
   private keyEvents = new Subject();
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
