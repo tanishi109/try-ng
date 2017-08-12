@@ -1,19 +1,6 @@
-import { AppService, Commands, CommandDial } from './app.service';
-import {times} from 'lodash';
-
-describe('AppService', () => {
-  let s: AppService;
-
-  beforeEach(() => {
-    s = new AppService();
-  });
-
-  it('should ***', (() => {
-    const command = s.getCommandFromKeyCode(37);
-
-    expect(command).toBe(Commands.Left);
-  }));
-});
+import { CommandDial } from './command';
+import { Commands } from '../domain/Command';
+import { times } from 'lodash';
 
 describe('CommandDial', () => {
   describe('start rotate() from Down command', () => {
