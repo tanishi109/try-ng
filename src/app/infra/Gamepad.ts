@@ -2,7 +2,7 @@ import {times, compact} from 'lodash';
 
 type handler = (gp: Gamepad) => void;
 
-export default class GamepadManager {
+export class GamepadInfra {
   private handleGamepad: handler;
 
   constructor(handleGamepad: handler) {

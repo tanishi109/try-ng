@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { CommandComponent } from './command.component';
+import { CommandComponent } from '../command/command.component';
 
 @NgModule({
   declarations: [
