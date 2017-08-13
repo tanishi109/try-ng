@@ -1,3 +1,28 @@
+.gameRoot {
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.taskBgWrapper {
+  position: relative;
+  width: 100vw;
+}
+
+.taskBg {
+  width: 150%;
+  background-color: #FFF514;
+  height: 230px;
+  transform: skewX(-20deg) rotate(10deg) translateX(-50%);
+  position: absolute;
+  top: 50px;
+  left: 50%;
+}
+
 .taskList {
   height: calc(94px + 16px);
   overflow: hidden;
@@ -19,4 +44,15 @@
   100% {
     transform: translateY(-110px);
   }
+}
+
+.point {
+  z-index: 1;
+  font-size: 12px;
+  margin-top: 45px;
+}
+
+.pointNum {
+  font-size: 18px;
+  font-weight: bold;
 }

@@ -1,4 +1,11 @@
-<div (window:keydown)="handleKey($event)">
+<div
+  (window:keydown)="handleKey($event)"
+  class="gameRoot"
+  >
+  <div class="taskBgWrapper">
+  <div class="taskBg">
+  </div>
+  </div>
   <div class="taskList">
     <div
       *ngFor="let task of player.taskQueue"
@@ -8,7 +15,7 @@
       <app-command-component *ngFor="let m of task.move" [command]="m"></app-command-component> 
     </div>
   </div>
-  <div>
-    Point: {{player.score}}
+  <div class="point">
+    Point: <b class="pointNum">{{player.score}}</b>
   </div>
 </div>

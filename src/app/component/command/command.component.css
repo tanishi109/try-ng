@@ -18,13 +18,13 @@
 .inner {
   width: 30px;
   height: 30px;
-  background-color: #FFF514;
+  background-color: #000;
   opacity: 0.3;
 }
 .inner:not(:first-child) {
   margin-left: 2px;
 }
 .inner.active {
-  background-color: #FFF514;
+  background-color: #000;
   opacity: 1;
 }
