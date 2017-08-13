@@ -14,6 +14,11 @@ import { GamepadInfra } from 'app/infra/Gamepad';
 })
 export class AppComponent {
   player = playerApp.init();
+  isMoving = false;
+  moveDuration = 250;
+  taskStyle = {
+    'animation-duration': `${this.moveDuration}ms`,
+  };
   private keyEvents = new Subject();
   private commandEvents = new Subject();
   private gamePadEvents = new Subject();
@@ -53,6 +58,7 @@ export class AppComponent {
       .retry()
       .subscribe((commands: string[]) => {
         if (playerApp.isEq(this.player, commands)) {
+          this.animate();
           playerApp.doneTask(this.player);
         }
         this.player.commands = commands;
@@ -90,4 +96,11 @@ export class AppComponent {
     const keyCode = $event.keyCode;
     this.keyEvents.next(keyCode);
   };
+
+  animate() {
+    this.isMoving = true;
+    setTimeout(() => {
+      this.isMoving = false;
+    }, this.moveDuration);
+  }
 }

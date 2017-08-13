@@ -1,5 +1,9 @@
 <div (window:keydown)="handleKey($event)">
-  <div *ngFor="let task of player.taskQueue" [ngClass]="{'move': true}">
+  <div
+    *ngFor="let task of player.taskQueue"
+    class="task" [ngClass]="{'taskIn': isMoving}"
+    [ngStyle]="taskStyle"
+    >
     <app-command-component *ngFor="let m of task.move" [command]="m"></app-command-component> 
   </div>
   <div>

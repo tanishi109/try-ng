@@ -1,10 +1,14 @@
-.move {
+.task {
   display: flex;
   margin-top: 16px;
-  animation: move-in 0.25s ease;
 }
 
-@keyframes move-in {
+.taskIn {
+  animation-name: task-in;
+  animation-timing-function: ease;
+}
+
+@keyframes task-in {
   0% {
     transform: translateY(-110px);
   }
