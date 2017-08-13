@@ -1,6 +1,12 @@
+.taskList {
+  height: calc(94px + 16px);
+  overflow: hidden;
+}
+
 .task {
   display: flex;
   margin-top: 16px;
+  transform: translateY(-110px);
 }
 
 .taskIn {
@@ -10,9 +16,9 @@
 
 @keyframes task-in {
   0% {
-    transform: translateY(-110px);
+    transform: translateY(-220px);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(-110px);
   }
 }
