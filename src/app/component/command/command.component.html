@@ -1,8 +1,13 @@
-  <div *ngIf="command !== 'p'" class="wrapper">
-    <div *ngFor="let row of [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3']]" class="row">
-      <div *ngFor="let r of row" class="inner" [ngClass]="{'active': command === r}"></div>
-    </div>
-  </div>
-  <div *ngIf="command === 'p'" class="wrapper">
-    + p
-  </div>
+<div
+  class="wrapper"
+  [ngStyle]="wrapperStyle"
+  >
+    <ng-template [ngIf]="command !== 'p'">
+      <div *ngFor="let row of [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3']]" class="row">
+        <div *ngFor="let r of row" class="inner" [ngClass]="{'active': command === r}"></div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="command === 'p'">
+      + p
+    </ng-template>
+</div>

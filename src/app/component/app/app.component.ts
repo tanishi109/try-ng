@@ -5,6 +5,7 @@ import { Commands } from 'app/domain/Command';
 import GamepadDomain from 'app/domain/Gamepad';
 import playerApp from 'app/application/player';
 import { GamepadInfra } from 'app/infra/Gamepad';
+import { outerSize } from '../command/command.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent {
   moveDuration = 250;
   taskStyle = {
     'animation-duration': `${this.moveDuration}ms`,
+    'transform': `translateY(${outerSize * this.player.currentMoveIndex * -1}px)`,
   };
   private keyEvents = new Subject();
   private commandEvents = new Subject();

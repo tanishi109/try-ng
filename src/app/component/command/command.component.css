@@ -1,8 +1,6 @@
 .wrapper {
   --border-color: black;
 
-  width: 94px;
-  height: 94px;
   margin-left: 8px;
   display: flex;
   flex-direction: column;

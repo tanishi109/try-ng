@@ -5,8 +5,6 @@
 
 .task {
   display: flex;
-  margin-top: 16px;
-  transform: translateY(-110px);
 }
 
 .taskIn {
