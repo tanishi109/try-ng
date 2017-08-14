@@ -21,11 +21,35 @@ export class AppComponent {
     'animation-duration': `${this.moveDuration}ms`,
     'transform': `translateY(${outerSize * this.player.currentMoveIndex * -1}px)`,
   };
-  private keyEvents = new Subject();
-  private commandEvents = new Subject();
-  private gamePadEvents = new Subject();
+  keyEvents: Subject<{}>;
+  commandEvents: Subject<{}>;
+  gamePadEvents: Subject<{}>;
+  isGameBegin: boolean = false;
 
   constructor() {
+  }
+
+  @HostListener('keydown') handleKey($event) {
+    const keyCode = $event.keyCode;
+    this.keyEvents.next(keyCode);
+  };
+
+  beginGame() {
+    this.startStreams();
+    this.isGameBegin = true;
+
+    setTimeout(() => {
+      this.endStreams();
+      this.isGameBegin = false;
+    }, 3000);
+  }
+
+  startStreams() {
+    console.log("*** start")
+    this.keyEvents = new Subject();
+    this.commandEvents = new Subject();
+    this.gamePadEvents = new Subject();
+
     this.keyEvents
       .filter((keyCode: number) => {
         return [37, 38, 39, 40, 90].includes(keyCode);
@@ -94,11 +118,16 @@ export class AppComponent {
       this.gamePadEvents.next(command);
     });
   }
-  @HostListener('keydown') handleKey($event) {
-    const keyCode = $event.keyCode;
-    this.keyEvents.next(keyCode);
-  };
 
+  endStreams() {
+    console.log("*** end")
+    this.keyEvents = new Subject();
+    this.keyEvents.complete();
+    this.commandEvents.complete();
+    this.gamePadEvents.complete();
+  }
+
+  // TODO: use ng animate, transition
   animate() {
     this.isMoving = true;
     setTimeout(() => {
