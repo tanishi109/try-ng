@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ghp": "ng build --base-href 'https://tanishi109.github.io/try-ng/' && ngh"
+    "ghp": "ng build --env=prod --base-href 'https://tanishi109.github.io/try-ng/' && ngh"
   },
   "private": true,
   "dependencies": {
