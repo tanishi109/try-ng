@@ -31,7 +31,9 @@ export class AppComponent {
 
   @HostListener('keydown') handleKey($event) {
     const keyCode = $event.keyCode;
-    this.keyEvents.next(keyCode);
+    if (this.keyEvents && this.keyEvents.isStopped === false) {
+      this.keyEvents.next(keyCode);
+    }
   };
 
   beginGame() {
