@@ -26,13 +26,20 @@ export class AppComponent {
   gamePadEvents: Subject<{}>;
   isGameBegin: boolean = false;
   isGameReady: boolean = false;
+  // begin ready
+  // -----------
+  // false false
+  // false true
+  // true  false
+  // false false
+  keyStrokes = [];
 
   constructor() {
   }
 
   @HostListener('keydown') handleKey($event) {
-    const keyCode = $event.keyCode;
-    if (this.keyEvents && this.keyEvents.isStopped === false && this.isGameBegin) {
+    const keyCode = $event ? $event.keyCode : null;
+    if (this.keyEvents && this.keyEvents.isStopped === false && keyCode) {
       this.keyEvents.next(keyCode);
     }
   };
@@ -76,6 +83,11 @@ export class AppComponent {
       })
       .filter((command: string) => !!command)
       .subscribe((command: string) => {
+        this.keyStrokes.push(command);
+        setTimeout(() => {
+          this.keyStrokes.shift();
+        }, 500);
+
         this.commandEvents.next(command);
       });
 
@@ -91,7 +103,7 @@ export class AppComponent {
       .timeout(1000) // TODO: 20f
       .retry()
       .subscribe((commands: string[]) => {
-        if (playerApp.isEq(this.player, commands)) {
+        if (playerApp.isEq(this.player, commands) && this.isGameBegin) {
           this.animate();
           playerApp.doneTask(this.player);
         }
