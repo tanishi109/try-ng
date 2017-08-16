@@ -32,7 +32,7 @@ export class AppComponent {
   // false true
   // true  false
   // false false
-  keyStrokes = [];
+  keyStrokes: Commands[] = [];
 
   constructor() {
   }
