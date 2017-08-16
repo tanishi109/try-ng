@@ -25,25 +25,31 @@ export class AppComponent {
   commandEvents: Subject<{}>;
   gamePadEvents: Subject<{}>;
   isGameBegin: boolean = false;
+  isGameReady: boolean = false;
 
   constructor() {
   }
 
   @HostListener('keydown') handleKey($event) {
     const keyCode = $event.keyCode;
-    if (this.keyEvents && this.keyEvents.isStopped === false) {
+    if (this.keyEvents && this.keyEvents.isStopped === false && this.isGameBegin) {
       this.keyEvents.next(keyCode);
     }
   };
 
   beginGame() {
     this.startStreams();
-    this.isGameBegin = true;
+    this.isGameReady = true;
 
     setTimeout(() => {
-      this.endStreams();
-      this.isGameBegin = false;
-    }, 3000);
+      this.isGameBegin = true;
+      this.isGameReady = false;
+
+      setTimeout(() => {
+        this.endStreams();
+        this.isGameBegin = false;
+      }, 3000);
+    }, 2000);
   }
 
   startStreams() {
