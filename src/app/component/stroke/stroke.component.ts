@@ -14,6 +14,8 @@ const pos = {
   [Commands.LeftDown]: [0, 2],
   [Commands.Down]: [1, 2],
   [Commands.RightDown]: [2, 2],
+
+  [Commands.P]: [0, 0],
 };
 
 @Component({
