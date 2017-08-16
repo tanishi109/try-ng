@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { CommandComponent } from '../command/command.component';
+import { StrokeComponent } from '../stroke/stroke.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommandComponent,
+    StrokeComponent,
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,6 @@
   <div
     *ngFor="let k of keyStrokes"
     >
-    {{k}}
-    <!-- TODO: Create keyStroke component -->
+    <stroke-component [command]="k"></stroke-component>
   </div>
 </div>
