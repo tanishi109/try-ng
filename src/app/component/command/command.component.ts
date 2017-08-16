@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-
+export const innerSize = 30;
 export const size = 94;
 export const topMargin = 16;
 export const outerSize = size + topMargin;
@@ -12,6 +12,10 @@ export const outerSize = size + topMargin;
 })
 export class CommandComponent {
   @Input() command: string;
+  innerStyle = {
+    'width.px': innerSize,
+    'height.px': innerSize,
+  };
   wrapperStyle = {
     'width.px': size,
     'height.px': size,
