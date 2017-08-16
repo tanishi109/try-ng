@@ -82,7 +82,7 @@ export class AppComponent {
         return playerApp.getCurrentCommand(this.player);
       })
       .filter((command: string) => !!command)
-      .subscribe((command: string) => {
+      .subscribe((command: Commands) => {
         this.keyStrokes.push(command);
         setTimeout(() => {
           this.keyStrokes.shift();
