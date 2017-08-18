@@ -7,6 +7,11 @@
   </div>
   </div>
   <div class="taskList">
+    <div class="strokeWrapper">
+      <div class="strokeAbs">
+        <stroke-component *ngFor="let k of keyStrokes" [command]="k"></stroke-component>
+      </div>
+    </div>
     <div
       *ngFor="let task of player.taskQueue"
       class="task" [ngClass]="{'taskIn': isMoving}"
@@ -29,10 +34,5 @@
   </div>
   <div *ngIf="isGameReady === false && isGameBegin === true">
     Go!
-  </div>
-  <div
-    *ngFor="let k of keyStrokes"
-    >
-    <stroke-component [command]="k"></stroke-component>
   </div>
 </div>

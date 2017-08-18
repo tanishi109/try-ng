@@ -28,9 +28,10 @@ export class StrokeComponent implements AfterViewInit {
   rootStyle = {};
 
   ngAfterViewInit() {
+    const [xMulti, yMulti] = pos[this.command];
     this.rootStyle = {
-      'left.px': pos[this.command][0] * innerSize,
-      'top.px': pos[this.command][1] * innerSize,
+      'left.px': xMulti * innerSize + xMulti * 2,
+      'top.px': yMulti * innerSize + yMulti * 2,
     };
   }
 }

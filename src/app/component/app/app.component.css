@@ -28,6 +28,15 @@
   overflow: hidden;
 }
 
+.strokeWrapper {
+  position: relative;
+}
+
+.strokeAbs {
+  position: absolute;
+  top: 16px;
+}
+
 .task {
   display: flex;
 }
