@@ -7,16 +7,16 @@
   </div>
   </div>
   <div class="taskList">
-    <ngFor let n of [0,1,2]>
+    <div *ngFor="let n of [0, 1, 2]">
       <div
         class="strokeWrapper"
-        ngStyle=getStrokeStyle(n)
+        [ngStyle]="getStrokeStyle(n)"
         >
         <div class="strokeAbs">
           <stroke-component *ngFor="let k of keyStrokes[n]" [command]="k"></stroke-component>
         </div>
       </div>
-    </ngFor>
+    </div>
     <div
       *ngFor="let task of player.taskQueue"
       class="task" [ngClass]="{'taskIn': isMoving}"

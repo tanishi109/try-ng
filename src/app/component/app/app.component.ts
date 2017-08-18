@@ -31,7 +31,7 @@ export class AppComponent {
   // false true
   // true  false
   // false false
-  keyStrokes: Commands[] = [];
+  keyStrokes: Commands[][] = [[], [], []];
 
   constructor() {
   }
@@ -82,9 +82,9 @@ export class AppComponent {
       })
       .filter((command: string) => !!command)
       .subscribe((command: Commands) => {
-        this.keyStrokes.push(command);
+        this.keyStrokes[0].push(command);
         setTimeout(() => {
-          this.keyStrokes.shift();
+          this.keyStrokes[0].shift();
         }, 500);
 
         this.commandEvents.next(command);
@@ -152,5 +152,9 @@ export class AppComponent {
     setTimeout(() => {
       this.isMoving = false;
     }, this.moveDuration);
+  }
+
+  getStrokeStyle(n: number) {
+    return {};
   }
 }
