@@ -23,8 +23,8 @@ export class AppComponent {
   keyEvents: Subject<{}>;
   commandEvents: Subject<{}>;
   gamePadEvents: Subject<{}>;
-  isGameBegin: boolean = false;
-  isGameReady: boolean = false;
+  isGameBegin = false;
+  isGameReady = false;
   // begin ready
   // -----------
   // false false
