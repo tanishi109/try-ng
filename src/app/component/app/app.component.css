@@ -24,7 +24,7 @@
 }
 
 .taskList {
-  height: calc(94px + 16px);
+  height: calc((94px + 16px) * 2);
   overflow: hidden;
 }
 
@@ -39,10 +39,10 @@
 
 @keyframes task-in {
   0% {
-    transform: translateY(-220px);
+    transform: translateY(-110px);
   }
   100% {
-    transform: translateY(-110px);
+    transform: translateY(0);
   }
 }
 

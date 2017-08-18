@@ -19,7 +19,6 @@ export class AppComponent {
   moveDuration = 250;
   taskStyle = {
     'animation-duration': `${this.moveDuration}ms`,
-    'transform': `translateY(${outerSize * this.player.currentMoveIndex * -1}px)`,
   };
   keyEvents: Subject<{}>;
   commandEvents: Subject<{}>;
