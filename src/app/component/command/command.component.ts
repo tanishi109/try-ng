@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 
 export const innerSize = 30;
 export const size = 94;
@@ -10,8 +10,9 @@ export const outerSize = size + topMargin;
   templateUrl: './command.component.html',
   styleUrls: ['./command.component.css'],
 })
-export class CommandComponent {
+export class CommandComponent implements AfterViewInit  {
   @Input() command: string;
+  @Input() index: number;
   innerStyle = {
     'width.px': innerSize,
     'height.px': innerSize,
@@ -21,4 +22,11 @@ export class CommandComponent {
     'height.px': size,
     'margin-top.px': topMargin,
   };
+
+  ngAfterViewInit() {
+    if (this.index === 0) {
+      console.log("zero")
+      this.wrapperStyle['margin-left.px'] = 0;
+    }
+  }
 }

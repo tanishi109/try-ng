@@ -12,7 +12,10 @@
       class="task" [ngClass]="{'taskIn': isMoving}"
       [ngStyle]="taskStyle"
       >
-      <app-command-component *ngFor="let m of task.move" [command]="m"></app-command-component> 
+      <app-command-component
+        *ngFor="let m of task.move; let i = index"
+        [index]="i" [command]="m"
+        ></app-command-component> 
     </div>
   </div>
   <div class="point">
