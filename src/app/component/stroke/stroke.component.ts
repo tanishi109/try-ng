@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
-import { Commands } from 'app/domain/command';
+import { Commands } from 'app/domain/Command';
 import { innerSize } from '../command/command.component';
 
 const pos = {
