@@ -55,7 +55,7 @@ export class AppComponent {
       setTimeout(() => {
         this.endStreams();
         this.isGameBegin = false;
-      }, 3000);
+      }, 60 * 1000); // 60 sec
     }, 2000);
   }
 
