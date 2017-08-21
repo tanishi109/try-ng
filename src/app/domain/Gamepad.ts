@@ -40,6 +40,25 @@ const proConMap = {
   '3.0000': Commands.P,
 };
 
+const joyConLAxesMap = {
+  '0.7142857313156128': Commands.Left,
+  '0.4285714626312256': Commands.LeftDown,
+  '0.14285719394683838': Commands.Down,
+  '-0.1428571343421936': Commands.RightDown,
+  '-0.4285714030265808': Commands.Right,
+  '1.2857143878936768': Commands.Neutral,
+  '1': Commands.LeftUp,
+  '-1': Commands.Up,
+  '-0.7142857313156128': Commands.RightUp,
+};
+
+const joyConLButtonsMap = {
+  '0': Commands.P,
+  '1': Commands.P,
+  '2': Commands.P,
+  '3': Commands.P,
+};
+
 export default {
   getCommandFromKeyCode(code: number): Commands {
     return keyMap[code];
@@ -49,5 +68,12 @@ export default {
     const codeString = `${code.toFixed(4)}`;
 
     return proConMap[codeString];
+  },
+
+  getCommandFromJoyConLKeyCode(code: number, type: 'axes' | 'buttons' = 'axes'): Commands {
+    const codeString = `${code}`;
+    const map = type === 'axes' ? joyConLAxesMap : joyConLButtonsMap;
+
+    return map[codeString];
   },
 };

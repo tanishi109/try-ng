@@ -121,10 +121,10 @@ export class AppComponent {
 
     new GamepadInfra((gamepad: Gamepad) => { // tslint:disable-line
       const crossKeyCode = gamepad.axes[gamepad.axes.length - 1]; // getCrossKeyにする
-      const command = GamepadDomain.getCommandFromProConKeyCode(crossKeyCode);
+      const command = GamepadDomain.getCommandFromJoyConLKeyCode(crossKeyCode);
       const pad = gamepad.buttons.map((button, index) => {
         if (button.pressed) {
-          return GamepadDomain.getCommandFromProConKeyCode(parseFloat(`${index}`));
+          return GamepadDomain.getCommandFromJoyConLKeyCode(index, 'buttons');
         }
       });
 
