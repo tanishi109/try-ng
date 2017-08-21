@@ -128,7 +128,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".gameRoot {\n  height: 100%;\n  width: 100vw;\n  overflow: hidden;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n\n.taskBgWrapper {\n  position: relative;\n  width: 100vw;\n}\n\n.taskBg {\n  width: 150%;\n  background-color: #FFF514;\n  height: 230px;\n  -webkit-transform: skewX(-20deg) rotate(10deg) translateX(-50%);\n          transform: skewX(-20deg) rotate(10deg) translateX(-50%);\n  position: absolute;\n  top: 50px;\n  left: 50%;\n}\n\n.taskList {\n  height: calc(94px + 16px);\n  overflow: hidden;\n}\n\n.task {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.taskIn {\n  -webkit-animation-name: task-in;\n          animation-name: task-in;\n  -webkit-animation-timing-function: ease;\n          animation-timing-function: ease;\n}\n\n@-webkit-keyframes task-in {\n  0% {\n    -webkit-transform: translateY(-220px);\n            transform: translateY(-220px);\n  }\n  100% {\n    -webkit-transform: translateY(-110px);\n            transform: translateY(-110px);\n  }\n}\n\n@keyframes task-in {\n  0% {\n    -webkit-transform: translateY(-220px);\n            transform: translateY(-220px);\n  }\n  100% {\n    -webkit-transform: translateY(-110px);\n            transform: translateY(-110px);\n  }\n}\n\n.point {\n  z-index: 1;\n  font-size: 12px;\n  margin-top: 45px;\n}\n\n.pointNum {\n  font-size: 18px;\n  font-weight: bold;\n}\n", ""]);
+exports.push([module.i, ".gameRoot {\n  height: 100%;\n  width: 100vw;\n  overflow: hidden;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n\n.taskBgWrapper {\n  position: relative;\n  width: 100vw;\n}\n\n.taskBg {\n  width: 150%;\n  background-color: #FFF514;\n  height: 230px;\n  -webkit-transform: skewX(-20deg) rotate(10deg) translateX(-50%);\n          transform: skewX(-20deg) rotate(10deg) translateX(-50%);\n  position: absolute;\n  top: 50px;\n  left: 50%;\n}\n\n.taskList {\n  height: calc((94px + 16px) * 2);\n  overflow: hidden;\n}\n\n.strokeWrapper {\n  position: relative;\n}\n\n.strokeAbs {\n  position: absolute;\n  top: 16px;\n}\n\n.task {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.taskIn {\n  -webkit-animation-name: task-in;\n          animation-name: task-in;\n  -webkit-animation-timing-function: ease;\n          animation-timing-function: ease;\n}\n\n@-webkit-keyframes task-in {\n  0% {\n    -webkit-transform: translateY(-110px);\n            transform: translateY(-110px);\n  }\n  100% {\n    -webkit-transform: translateY(0);\n            transform: translateY(0);\n  }\n}\n\n@keyframes task-in {\n  0% {\n    -webkit-transform: translateY(-110px);\n            transform: translateY(-110px);\n  }\n  100% {\n    -webkit-transform: translateY(0);\n            transform: translateY(0);\n  }\n}\n\n.point {\n  z-index: 1;\n  font-size: 12px;\n  margin-top: 45px;\n}\n\n.pointNum {\n  font-size: 18px;\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -141,7 +141,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div\n  (window:keydown)=\"handleKey($event)\"\n  class=\"gameRoot\"\n  >\n  <div class=\"taskBgWrapper\">\n  <div class=\"taskBg\">\n  </div>\n  </div>\n  <div class=\"taskList\">\n    <div\n      *ngFor=\"let task of player.taskQueue\"\n      class=\"task\" [ngClass]=\"{'taskIn': isMoving}\"\n      [ngStyle]=\"taskStyle\"\n      >\n      <app-command-component *ngFor=\"let m of task.move\" [command]=\"m\"></app-command-component> \n    </div>\n  </div>\n  <div class=\"point\">\n    Point: <b class=\"pointNum\">{{player.score}}</b>\n  </div>\n</div>\n"
+module.exports = "<div\n  (window:keydown)=\"handleKey($event)\"\n  class=\"gameRoot\"\n  >\n  <!-- <div class=\"taskBgWrapper\">\n  <div class=\"taskBg\">\n  </div>\n  </div> -->\n  <div class=\"taskList\">\n    <div *ngFor=\"let n of [0, 1, 2]\">\n      <div\n        class=\"strokeWrapper\"\n        [ngStyle]=\"getStrokeStyle(n)\"\n        >\n        <div class=\"strokeAbs\">\n          <stroke-component *ngFor=\"let k of keyStrokes[n]\" [command]=\"k\"></stroke-component>\n        </div>\n      </div>\n    </div>\n    <div\n      *ngFor=\"let task of player.taskQueue\"\n      class=\"task\" [ngClass]=\"{'taskIn': isMoving}\"\n      [ngStyle]=\"taskStyle\"\n      >\n      <app-command-component\n        *ngFor=\"let m of task.move; let i = index\"\n        [index]=\"i\" [command]=\"m\"\n        ></app-command-component> \n    </div>\n  </div>\n  <div class=\"point\">\n    Point: <b class=\"pointNum\">{{player.score}}</b>\n  </div>\n  <button [disabled]=\"isGameBegin\" (click)=\"beginGame()\">\n    start\n  </button>\n  <div *ngIf=\"isGameReady === true\">\n    Ready...\n  </div>\n  <div *ngIf=\"isGameReady === false && isGameBegin === true\">\n    Go!\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -156,7 +156,6 @@ module.exports = "<div\n  (window:keydown)=\"handleKey($event)\"\n  class=\"game
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_domain_Gamepad__ = __webpack_require__("../../../../../src/app/domain/Gamepad.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_application_player__ = __webpack_require__("../../../../../src/app/application/player.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_app_infra_Gamepad__ = __webpack_require__("../../../../../src/app/infra/Gamepad.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__command_command_component__ = __webpack_require__("../../../../../src/app/component/command/command.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -173,17 +172,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var AppComponent = (function () {
     function AppComponent() {
-        var _this = this;
         this.player = __WEBPACK_IMPORTED_MODULE_4_app_application_player__["a" /* default */].init();
         this.isMoving = false;
         this.moveDuration = 250;
         this.taskStyle = {
             'animation-duration': this.moveDuration + "ms",
-            'transform': "translateY(" + __WEBPACK_IMPORTED_MODULE_6__command_command_component__["b" /* outerSize */] * this.player.currentMoveIndex * -1 + "px)",
         };
+        this.isGameBegin = false;
+        this.isGameReady = false;
+        // begin ready
+        // -----------
+        // false false
+        // false true
+        // true  false
+        // false false
+        this.keyStrokes = [[], [], []];
+    }
+    AppComponent.prototype.handleKey = function ($event) {
+        var keyCode = $event ? $event.keyCode : null;
+        if (this.keyEvents && this.keyEvents.isStopped === false && keyCode) {
+            this.keyEvents.next(keyCode);
+        }
+    };
+    ;
+    AppComponent.prototype.beginGame = function () {
+        var _this = this;
+        this.startStreams();
+        this.isGameReady = true;
+        setTimeout(function () {
+            _this.isGameBegin = true;
+            _this.isGameReady = false;
+            setTimeout(function () {
+                _this.endStreams();
+                _this.isGameBegin = false;
+            }, 60 * 1000); // 60 sec
+        }, 2000);
+    };
+    AppComponent.prototype.startStreams = function () {
+        var _this = this;
+        console.log("*** start");
         this.keyEvents = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Subject"]();
         this.commandEvents = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Subject"]();
         this.gamePadEvents = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Subject"]();
@@ -203,6 +232,10 @@ var AppComponent = (function () {
         })
             .filter(function (command) { return !!command; })
             .subscribe(function (command) {
+            _this.keyStrokes[0].push(command);
+            setTimeout(function () {
+                _this.keyStrokes[0].shift();
+            }, 500);
             _this.commandEvents.next(command);
         });
         this.commandEvents
@@ -216,7 +249,7 @@ var AppComponent = (function () {
             .timeout(1000) // TODO: 20f
             .retry()
             .subscribe(function (commands) {
-            if (__WEBPACK_IMPORTED_MODULE_4_app_application_player__["a" /* default */].isEq(_this.player, commands)) {
+            if (__WEBPACK_IMPORTED_MODULE_4_app_application_player__["a" /* default */].isEq(_this.player, commands) && _this.isGameBegin) {
                 _this.animate();
                 __WEBPACK_IMPORTED_MODULE_4_app_application_player__["a" /* default */].doneTask(_this.player);
             }
@@ -232,10 +265,10 @@ var AppComponent = (function () {
         });
         new __WEBPACK_IMPORTED_MODULE_5_app_infra_Gamepad__["a" /* GamepadInfra */](function (gamepad) {
             var crossKeyCode = gamepad.axes[gamepad.axes.length - 1]; // getCrossKeyにする
-            var command = __WEBPACK_IMPORTED_MODULE_3_app_domain_Gamepad__["a" /* default */].getCommandFromProConKeyCode(crossKeyCode);
+            var command = __WEBPACK_IMPORTED_MODULE_3_app_domain_Gamepad__["a" /* default */].getCommandFromJoyConLKeyCode(crossKeyCode);
             var pad = gamepad.buttons.map(function (button, index) {
                 if (button.pressed) {
-                    return __WEBPACK_IMPORTED_MODULE_3_app_domain_Gamepad__["a" /* default */].getCommandFromProConKeyCode(parseFloat("" + index));
+                    return __WEBPACK_IMPORTED_MODULE_3_app_domain_Gamepad__["a" /* default */].getCommandFromJoyConLKeyCode(index, 'buttons');
                 }
             });
             pad
@@ -243,20 +276,33 @@ var AppComponent = (function () {
                 .forEach(function (c) {
                 _this.gamePadEvents.next(c);
             });
+            // TODO: キーボードのやつと一緒にしたい
+            if (command !== __WEBPACK_IMPORTED_MODULE_2_app_domain_Command__["a" /* Commands */].Neutral) {
+                _this.keyStrokes[0].push(command);
+                setTimeout(function () {
+                    _this.keyStrokes[0].shift();
+                }, 500);
+            }
             _this.gamePadEvents.next(command);
         });
-    }
-    AppComponent.prototype.handleKey = function ($event) {
-        var keyCode = $event.keyCode;
-        this.keyEvents.next(keyCode);
     };
-    ;
+    AppComponent.prototype.endStreams = function () {
+        console.log("*** end");
+        this.keyEvents = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["Subject"]();
+        this.keyEvents.complete();
+        this.commandEvents.complete();
+        this.gamePadEvents.complete();
+    };
+    // TODO: use ng animate, transition
     AppComponent.prototype.animate = function () {
         var _this = this;
         this.isMoving = true;
         setTimeout(function () {
             _this.isMoving = false;
         }, this.moveDuration);
+    };
+    AppComponent.prototype.getStrokeStyle = function (n) {
+        return {};
     };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_6" /* HostListener */])('keydown'),
@@ -289,6 +335,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__("../../../../../src/app/component/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__command_command_component__ = __webpack_require__("../../../../../src/app/component/command/command.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stroke_stroke_component__ = __webpack_require__("../../../../../src/app/component/stroke/stroke.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -296,6 +343,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -309,6 +357,7 @@ var AppModule = (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_4__command_command_component__["a" /* CommandComponent */],
+                __WEBPACK_IMPORTED_MODULE_5__stroke_stroke_component__["a" /* StrokeComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -333,7 +382,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".wrapper {\n  --border-color: black;\n\n  margin-left: 8px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n\n.row {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.row:not(:first-child) {\n  margin-top: 2px;\n}\n\n.inner {\n  width: 30px;\n  height: 30px;\n  background-color: #000;\n  opacity: 0.3;\n}\n.inner:not(:first-child) {\n  margin-left: 2px;\n}\n.inner.active {\n  background-color: #000;\n  opacity: 1;\n}", ""]);
+exports.push([module.i, ".wrapper {\n  --border-color: black;\n\n  margin-left: 8px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n\n.row {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.row:not(:first-child) {\n  margin-top: 2px;\n}\n\n.inner {\n  background-color: #000;\n  opacity: 0.3;\n}\n.inner:not(:first-child) {\n  margin-left: 2px;\n}\n.inner.active {\n  background-color: #000;\n  opacity: 1;\n}", ""]);
 
 // exports
 
@@ -346,7 +395,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/command/command.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div\n  class=\"wrapper\"\n  [ngStyle]=\"wrapperStyle\"\n  >\n    <ng-template [ngIf]=\"command !== 'p'\">\n      <div *ngFor=\"let row of [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3']]\" class=\"row\">\n        <div *ngFor=\"let r of row\" class=\"inner\" [ngClass]=\"{'active': command === r}\"></div>\n      </div>\n    </ng-template>\n    <ng-template [ngIf]=\"command === 'p'\">\n      + p\n    </ng-template>\n</div>\n"
+module.exports = "<div\n  class=\"wrapper\"\n  [ngStyle]=\"wrapperStyle\"\n  >\n    <ng-template [ngIf]=\"command !== 'p'\">\n      <div *ngFor=\"let row of [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3']]\" class=\"row\">\n        <div\n          *ngFor=\"let r of row\"\n          class=\"inner\"\n          [ngClass]=\"{'active': command === r}\"\n          [ngStyle]=\"innerStyle\"\n          ></div>\n      </div>\n    </ng-template>\n    <ng-template [ngIf]=\"command === 'p'\">\n      + p\n    </ng-template>\n</div>\n"
 
 /***/ }),
 
@@ -355,9 +404,10 @@ module.exports = "<div\n  class=\"wrapper\"\n  [ngStyle]=\"wrapperStyle\"\n  >\n
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return innerSize; });
 /* unused harmony export size */
 /* unused harmony export topMargin */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return outerSize; });
+/* unused harmony export outerSize */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommandComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -369,21 +419,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+var innerSize = 30;
 var size = 94;
 var topMargin = 16;
 var outerSize = size + topMargin;
 var CommandComponent = (function () {
     function CommandComponent() {
+        this.innerStyle = {
+            'width.px': innerSize,
+            'height.px': innerSize,
+        };
         this.wrapperStyle = {
             'width.px': size,
             'height.px': size,
             'margin-top.px': topMargin,
         };
     }
+    CommandComponent.prototype.ngAfterViewInit = function () {
+        if (this.index === 0) {
+            console.log("zero");
+            this.wrapperStyle['margin-left.px'] = 0;
+        }
+    };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */])(),
         __metadata("design:type", String)
     ], CommandComponent.prototype, "command", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */])(),
+        __metadata("design:type", Number)
+    ], CommandComponent.prototype, "index", void 0);
     CommandComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
             selector: 'app-command-component',
@@ -395,6 +460,93 @@ var CommandComponent = (function () {
 }());
 
 //# sourceMappingURL=command.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/component/stroke/stroke.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".root {\n  position: absolute;\n  width: 30px;\n  height: 30px;\n  background-color: #FFF514;\n  border-radius: 50%;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/component/stroke/stroke.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div\n  [ngStyle]=\"rootStyle\"\n  class=\"root\"\n  >\n  {{command}}\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/component/stroke/stroke.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_domain_Command__ = __webpack_require__("../../../../../src/app/domain/Command.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__command_command_component__ = __webpack_require__("../../../../../src/app/component/command/command.component.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StrokeComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var pos = (_a = {},
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].LeftUp] = [0, 0],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].Up] = [1, 0],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].RightUp] = [2, 0],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].Left] = [0, 1],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].Neutral] = [1, 1],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].Right] = [2, 1],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].LeftDown] = [0, 2],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].Down] = [1, 2],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].RightDown] = [2, 2],
+    _a[__WEBPACK_IMPORTED_MODULE_1_app_domain_Command__["a" /* Commands */].P] = [0, 0],
+    _a);
+var StrokeComponent = (function () {
+    function StrokeComponent() {
+        this.rootStyle = {};
+    }
+    StrokeComponent.prototype.ngAfterViewInit = function () {
+        var _a = pos[this.command], xMulti = _a[0], yMulti = _a[1];
+        this.rootStyle = {
+            'left.px': xMulti * __WEBPACK_IMPORTED_MODULE_2__command_command_component__["b" /* innerSize */] + xMulti * 2,
+            'top.px': yMulti * __WEBPACK_IMPORTED_MODULE_2__command_command_component__["b" /* innerSize */] + yMulti * 2,
+        };
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */])(),
+        __metadata("design:type", String)
+    ], StrokeComponent.prototype, "command", void 0);
+    StrokeComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
+            selector: 'stroke-component',
+            template: __webpack_require__("../../../../../src/app/component/stroke/stroke.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/component/stroke/stroke.component.css")],
+        })
+    ], StrokeComponent);
+    return StrokeComponent;
+}());
+
+var _a;
+//# sourceMappingURL=stroke.component.js.map
 
 /***/ }),
 
@@ -450,6 +602,23 @@ var proConMap = {
     '2.0000': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].P,
     '3.0000': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].P,
 };
+var joyConLAxesMap = {
+    '0.7142857313156128': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].Left,
+    '0.4285714626312256': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].LeftDown,
+    '0.14285719394683838': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].Down,
+    '-0.1428571343421936': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].RightDown,
+    '-0.4285714030265808': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].Right,
+    '1.2857143878936768': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].Neutral,
+    '1': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].LeftUp,
+    '-1': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].Up,
+    '-0.7142857313156128': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].RightUp,
+};
+var joyConLButtonsMap = {
+    '0': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].P,
+    '1': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].P,
+    '2': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].P,
+    '3': __WEBPACK_IMPORTED_MODULE_0__Command__["a" /* Commands */].P,
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     getCommandFromKeyCode: function (code) {
         return keyMap[code];
@@ -457,6 +626,12 @@ var proConMap = {
     getCommandFromProConKeyCode: function (code) {
         var codeString = "" + code.toFixed(4);
         return proConMap[codeString];
+    },
+    getCommandFromJoyConLKeyCode: function (code, type) {
+        if (type === void 0) { type = 'axes'; }
+        var codeString = "" + code;
+        var map = type === 'axes' ? joyConLAxesMap : joyConLButtonsMap;
+        return map[codeString];
     },
 });
 //# sourceMappingURL=Gamepad.js.map
