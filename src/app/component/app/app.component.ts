@@ -134,6 +134,14 @@ export class AppComponent {
           this.gamePadEvents.next(c);
         });
 
+      // TODO: キーボードのやつと一緒にしたい
+      if (command !== Commands.Neutral) {
+        this.keyStrokes[0].push(command);
+        setTimeout(() => {
+          this.keyStrokes[0].shift();
+        }, 500);
+      }
+
       this.gamePadEvents.next(command);
     });
   }
