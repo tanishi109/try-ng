@@ -15,7 +15,7 @@ const pos = {
   [Commands.Down]: [1, 2],
   [Commands.RightDown]: [2, 2],
 
-  [Commands.P]: [0, 0],
+  [Commands.P]: [1, 1],
 };
 
 @Component({
@@ -25,13 +25,15 @@ const pos = {
 })
 export class StrokeComponent implements AfterViewInit {
   @Input() command: string;
+  @Input() position: number;
   rootStyle = {};
 
   ngAfterViewInit() {
     const [xMulti, yMulti] = pos[this.command];
+    // console.log("pos", this.position);
     this.rootStyle = {
-      'left.px': xMulti * innerSize + xMulti * 2,
-      'top.px': yMulti * innerSize + yMulti * 2,
+      'left.px': xMulti * innerSize + xMulti * 2 + (94 + 8) * this.position,
+      'top.px': yMulti * innerSize + yMulti * 2 + (94 + 16),
     };
   }
 }

@@ -31,7 +31,7 @@ export class AppComponent {
   // false true
   // true  false
   // false false
-  keyStrokes: Commands[][] = [[], [], []];
+  keyStrokes: Commands[][] = [[], [], [], []];
 
   constructor() {
   }
@@ -82,11 +82,6 @@ export class AppComponent {
       })
       .filter((command: string) => !!command)
       .subscribe((command: Commands) => {
-        this.keyStrokes[0].push(command);
-        setTimeout(() => {
-          this.keyStrokes[0].shift();
-        }, 500);
-
         this.commandEvents.next(command);
       });
 
@@ -101,7 +96,8 @@ export class AppComponent {
       }, [])
       .timeout(1000) // TODO: 20f
       .retry()
-      .subscribe((commands: string[]) => {
+      .subscribe((commands: Commands[]) => {
+        this.registerStrokes(commands);
         if (playerApp.isEq(this.player, commands) && this.isGameBegin) {
           this.animate();
           playerApp.doneTask(this.player);
@@ -134,16 +130,18 @@ export class AppComponent {
           this.gamePadEvents.next(c);
         });
 
-      // TODO: キーボードのやつと一緒にしたい
-      if (command !== Commands.Neutral) {
-        this.keyStrokes[0].push(command);
-        setTimeout(() => {
-          this.keyStrokes[0].shift();
-        }, 500);
-      }
-
       this.gamePadEvents.next(command);
     });
+  }
+
+  registerStrokes(commands: Commands[]) {
+    const latestIndex = commands.length - 1;
+    const latestCommand = commands[latestIndex];
+    const latestMoveNum = latestCommand === Commands.P ? 3 : playerApp.lastEqIndex(this.player, commands);
+    this.keyStrokes[latestMoveNum].push(latestCommand);
+    setTimeout(() => {
+      this.keyStrokes[latestMoveNum].shift();
+    }, 250);
   }
 
   endStreams() {

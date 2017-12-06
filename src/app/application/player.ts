@@ -30,6 +30,29 @@ export default {
     return isEqual(player.getCurrentMove(), commands);
   },
 
+  lastEqIndex(player, commands): number {
+    const move = player.getCurrentMove();
+    const latestCommand = commands[commands.length - 1];
+
+    const i = move.indexOf(latestCommand);
+
+    if (i > 0) {
+      let n = i;
+      let l = 1;
+      while (n--) {
+        l++;
+        if (move[n] === commands[commands.length - l]) {
+          // console.log("ok")
+        } else {
+          // console.log("ng")
+          return 0;
+        }
+      }
+    }
+
+    return i === -1 ? 0 : i;
+  },
+
   doneTask(player) {
     player.taskQueue = [
       {

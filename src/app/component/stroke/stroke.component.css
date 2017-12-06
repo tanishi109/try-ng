@@ -4,4 +4,18 @@
   height: 30px;
   background-color: #FFF514;
   border-radius: 50%;
+  animation: particle 0.25s ease;
+  animation-fill-mode: both;
+  z-index: 9;
+}
+
+@keyframes particle {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0.5;
+  }
 }

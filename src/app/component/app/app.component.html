@@ -7,13 +7,13 @@
   </div>
   </div> -->
   <div class="taskList">
-    <div *ngFor="let n of [0, 1, 2]">
+    <div *ngFor="let n of [0, 1, 2, 3]">
       <div
         class="strokeWrapper"
         [ngStyle]="getStrokeStyle(n)"
         >
         <div class="strokeAbs">
-          <stroke-component *ngFor="let k of keyStrokes[n]" [command]="k"></stroke-component>
+          <stroke-component *ngFor="let k of keyStrokes[n]" [position]="n" [command]="k"></stroke-component>
         </div>
       </div>
     </div>
